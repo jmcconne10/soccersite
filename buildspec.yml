@@ -10,10 +10,11 @@ phases:
       - npm run build
   post_build:
     commands:
-      echo $DEST_LOC
-      #- aws s3 cp --recursive --acl public-read ./build $DEST_LOC
+      - echo Before Copy
+      - aws s3 cp --recursive --acl public-read ./build $DEST_LOC
+      - echo After Copy
  #     - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/service-worker.js s3://pondviewwoodworks.com/
-  #    - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://jmcconnellportfolio.com/
+      - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://jmcconnellportfolio.com/
  #     - aws cloudfront create-invalidation --distribution-id E1ATHI9LIJW2A6 --paths /index.html /service-worker.js
 artifacts:
   files:
