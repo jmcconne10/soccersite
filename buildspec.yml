@@ -1,0 +1,20 @@
+version: 0.1
+phases:
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+      - npm run build
+  post_build:
+    commands:
+      - aws s3 cp --recursive --acl public-read ./build $DEST_LOC
+ #     - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/service-worker.js s3://pondviewwoodworks.com/
+      - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://jmcconnellportfolio.com/
+ #     - aws cloudfront create-invalidation --distribution-id E1ATHI9LIJW2A6 --paths /index.html /service-worker.js
+artifacts:
+  files:
+    - '**/*'
+  base-directory: build
